@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <title>Login</title>
+</head>
+<body >
+    
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="wrapper fadeInDown" >
+  <div id="form" >
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img style="width:170px;height:150px" src="{% static 'img/seguranca.png' %}" id="icon" alt="User Icon"/>
+   
+    </div> <h4 style="font-family:Times New Roman; color:#2b2b2b">Sentinela</h4>
+
+    <!-- Login Form -->
+    <form action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      <h class="fadeIn second text-danger mb-4">{{retorno}}</h>
+      <input type="text" class="fadeIn second" name="login" placeholder="Usuário">
+      <input type="password"   class="fadeIn second" name="senha" placeholder="Senha">
+      
+      <input type="submit" class="fadeIn second" value="Entrar" style="margin-bottom: 30px;">
+    </form>
+  </div>
+</div>
+</body>
+</html>

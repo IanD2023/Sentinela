@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentinela</title>   
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sidebars.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+    <script src="{% static 'js/sidebars.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+    
+  </head>
+  
+<body style="margin:0px;display:flex; height:100vh;background:white;align-items: center;">
+
+  <div style="background-color:white;margin: 0px;height: 100%;width: 100%;">
+ 
+    <div class="shadow d-flex flex-column flex-shrink-0 p-3 bg-light" style="position: fixed;height: 100%;" id="menus">
+      <span class="d-none justify-content-end h5" id="fecharBar">x</span>
+
+      <a href="{% url 'home' %}" class="d-inline align-items-center justify-content-center link-dark text-decoration-none" style="margin: 0 auto;">
+        <img style="width:30px;height:30px; margin-left: 31%" src="{% static 'img/seguranca.png' %}" id="icon" alt="User Icon"/></br>
+        <span class="fs-" style="padding-top: 10px; ">Sentinela</span>
+       
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+      
+        <li>
+          <a href="/funcionario"  class="nav-link link-dark" id="funcionario">
+            <svg class="bi me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16">
+              <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"/>
+            </svg>
+            Funcionário
+          </a>
+        </li>
+        <li>
+          <a href="/visitante"  class="nav-link link-dark selecionado" id="visitante">
+            <svg class="bi me-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-raised-hand" viewBox="0 0 16 15">
+              <path d="M6 6.207v9.043a.75.75 0 0 0 1.5 0V10.5a.5.5 0 0 1 1 0v4.75a.75.75 0 0 0 1.5 0v-8.5a.25.25 0 1 1 .5 0v2.5a.75.75 0 0 0 1.5 0V6.5a3 3 0 0 0-3-3H6.236a.998.998 0 0 1-.447-.106l-.33-.165A.83.83 0 0 1 5 2.488V.75a.75.75 0 0 0-1.5 0v2.083c0 .715.404 1.37 1.044 1.689L5.5 5c.32.32.5.754.5 1.207Z"/>
+              <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/>
+            </svg>
+            Visitante
+          </a>
+        </li>
+
+        <li>
+          <a href="/dispositivos/coletores/" class="nav-link link-dark" id="coletores">
+            <svg class="bi me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upc-scan" viewBox="0 0 16 16">
+              <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5zM3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z"/>
+            </svg>
+            Coletores
+          </a>
+        
+        </li>
+
+        {% if request.user.is_superuser == 1%}
+
+        <li>
+          <a href="/dispositivos/balanca/" class="nav-link link-dark" id="balanca">
+            <svg class="bi me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exposure" viewBox="0 0 16 16">
+              <path d="M8.5 4a.5.5 0 0 0-1 0v2h-2a.5.5 0 0 0 0 1h2v2a.5.5 0 0 0 1 0V7h2a.5.5 0 0 0 0-1h-2V4Zm-3 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5Z"/>
+              <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8Z"/>
+            </svg>
+            Balanças
+          </a>
+
+        </li>
+        <li>
+          <a href="/usuarios" class="nav-link link-dark" id="usuarios">
+            <svg class="bi me-1" xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-person-gear" viewBox="1 0 16 16">
+              <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z"/>
+            </svg>
+            Usuarios
+          </a>
+      
+        </li>
+        
+        
+        {%endif%}
+        
+      </ul>
+      <hr>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg class="bi me-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+          </svg>
+          <strong>{{request.user.username}}</strong>
+        </a>
+        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+          <li><a class="dropdown-item" href="#" onclick="editar('{{request.user.id}}','/alterarsenha/')">Alterar Senha</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/">Sair</a></li>
+        </ul>
+      </div>
+      
+    </div>
+
+    <div class="shadow d-none" id="botaoBar" >
+
+      <a href="#" id="botaomenu" class="nav-link link-dark pt-4 pb-4 pl-1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z"/>
+        </svg>
+      </a>
+    </div>
+  
+<div class="conteudo pb-2" id="container">
+
+  {% block content %}<!-- default content text (typically empty) -->
+
+  
+  {% endblock %}
+
+</div>
+  <div id="modalChamados" class="modal fade" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
+      <div  class="modal-content">
+        <div id="modal">
+        </div>
+  
+      </div>
+    </div>
+  </div>
+       
+<input id="statusProcess" type="hidden"  value="{{status}}"></input>
+</div>
+</body>
+<script src="{% static 'js/site.js' %}"></script>
+</html>

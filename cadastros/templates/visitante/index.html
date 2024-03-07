@@ -1,0 +1,164 @@
+{% extends "home/index.html" %}
+
+
+{% block content %}
+<div class="container shadow p-3 mb-2 mt-2 bg-white rounded d-flex" >
+        
+    <form id="form_pesquisar" action="{% url 'visitante' %}" class="container-fluid justify-content-start" >
+
+    <div class="form-group">
+
+        {% if filtro  %}
+
+        <label  class="control-label" id="label_busca" style="text-transform: capitalize">Buscar {{filtro.0}}</label>
+        <input name="{{filtro.0}}" id="busca" class="form-control" placeholder="{{filtro.0}}" value="{{filtro.1}}" style="text-transform: capitalize"/>
+
+
+        {% else %}        
+        <label  class="control-label" id="label_busca">Buscar Nome</label>
+        <input name="nome" id="busca" class="form-control" placeholder="Nome"/>
+        {% endif %}
+
+
+        <span for="nome" class="text-danger"></span>
+    </div>
+
+      </form>
+
+    <div style="display: flex;justify-items: center;">
+    <div class="btn-group" style="height: 47%;margin-top: 30%;" >
+
+        <button form="form_pesquisar" type="submit" class="btn  text-white" style="background-color:#353935;">Buscar</button>
+        <button  style="color: white;background-color:black;" type="button" class="btn btn dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference" data-bs-toggle="dropdown" aria-expanded="false" data-bs-reference="parent">
+
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuReference" style="min-width: 0px;" >
+            
+            <li class="d-flex">
+            <button  class="dropdown-item "  onclick="procurar('Nome')">Nome</a>
+            <button  class="dropdown-item"  onclick="procurar('Cpf')">CPF</a>
+            <button  class="dropdown-item"  onclick="procurar('Mac')">Mac</a>
+            </li>
+        </ul>
+        
+    </div>
+    </div>
+      
+</div>
+<div class="container mt-4 shadow table-responsive">
+
+
+    {% if page_obj %}
+    <table class="table rounded">
+        <thead class="thead-dark ">
+            <tr>
+                <th scope="col"  >Nome</th>
+                <th scope="col">Tempo Acesso</th>
+                <th scope="col">Data Criação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mac_address in page_obj %}
+            <tr class="trTabela" onclick="editar('{{mac_address.id}}','/editar/')" >
+                <td width="50%">{{ mac_address.nome }}</td>
+                <td>{{ mac_address.tempo_acesso }} dia(s)</td>
+              <!--   {% for perfil in perfis %}
+                {% if perfil.codigo == mac_address.perfil %}
+               <td>{{ perfil.nome }}</td>
+                {% endif %}
+                {% endfor %}-->
+                <td>{{ mac_address.data_criacao}}</td>
+
+               <!-- <td><button type="submit" style="border: none;background-color: transparent;">
+                    <i class="material-icons" style="color:red" title="remover">remove_circle</i>
+                    </button> </td> -->
+                 </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    </div>
+    <h4 style="justify-content: center;display: flex; margin-top: 10%;color:#575757">Nenhum dado encontrado
+    <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-square-dots" viewBox="0 0 16 16">
+        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+        <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+      </svg></h4>
+    {% endif %}
+    {%if page_obj%}
+    <div class="container d-flex justify-content-start">
+    <h style="color:#575757"> Total registros {{total_registros}}</h>
+    </div>
+    {% endif %}
+
+{% if page_obj.has_other_pages %}
+<div class="container d-flex justify-content-center">
+    <div class="btn-group" role="group" aria-label="Item pagination" style="color:white;background-color: #353935;border-radius: 10px;">     
+        
+        {% if page_obj.has_previous %}
+
+            {% if request.GET.nome or request.GET.mac or request.GET.cpf %}
+            <a href="?page={{ page_obj.previous_page_number }}&nome={{request.GET.nome}}&mac={{request.GET.mac}}&cpf={{request.GET.cpf}}" class="btn btn-outline text-white">&laquo;</a>
+            {% else %}                
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline text-white">&laquo;</a>
+            {% endif %}
+
+        {% endif %}           
+        
+        {% for page_number in page_obj.paginator.page_range %}
+
+        {% if page_number <= page_obj.number|add:3 and page_number >= page_obj.number|add:-3 %}
+                {% if request.GET.nome or request.GET.mac or request.GET.cpf %}
+
+
+                    {% if page_obj.number == page_number %}
+                        <button class="btn btn-outline active text-white">
+                            <span>{{ page_number }}</span>
+                        </button>
+                    {% else %}
+                        <a href="?page={{ page_number }}&nome={{request.GET.nome}}&mac={{request.GET.mac}}&cpf={{request.GET.cpf}}" class="btn btn-outline">
+                        {{ page_number }}</a>
+                    {% endif %}
+
+
+                {% else %}
+                    {% if page_obj.number == page_number %}
+                        <button class="btn btn-outline active text-white">
+                        <span>{{ page_number }}</span>
+                        </button>
+                    {% else %}
+                        <a href="?page={{ page_number }}" class="btn btn-outline">
+                        {{ page_number }}
+                        </a>
+                    {% endif %}
+
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+            {% if page_obj.has_next %}                             
+
+                {% if request.GET.nome or request.GET.mac or request.GET.cpf %}
+                <a href="?page={{ page_obj.next_page_number }}&nome={{request.GET.nome}}&mac={{request.GET.mac}}&cpf={{request.GET.cpf}}" class="btn btn-outline text-white">&raquo;</a>
+                {% else %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline text-white">&raquo;</a>
+                {% endif %}
+
+            {% endif %}
+
+    
+    </div>
+</div>
+{% endif %}
+
+<input type="hidden" id="menu" value="visitante" retorno="{{retorno}}" msg="{{msg}}"></input>
+
+<div class="botaoCriarChamado">
+    <a href="#" id="criar_visitante" onclick="abrirModal('/criar_visitante/')" class="botaoCriarChamado">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+    </svg>
+    </a>
+    </div>
+{% endblock %}

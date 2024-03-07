@@ -1,0 +1,61 @@
+{% load static %}
+<form  method="POST" action="{%url 'editarColetor' cadastro.id %}">
+    {% csrf_token %}
+    <div class="modal-header">
+                <h4 class="modal-title"> Editar Cadastro</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('/dispositivos/coletores')" aria-hidden="true">&times;</button>
+            </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="modal-body" id="form_editar">
+
+        <input type="hidden" name="perfil" class="form-control" value="{{cadastro.perfil}}"/>
+        <input type="hidden" id="id_dispositivo" class="form-control" value="{{cadastro.id}}"/>
+        <div class="form-group">
+            <label  class="control-label">Loja</label>
+            <input name="loja" class="form-control" placeholder="Loja" value="{{cadastro.loja}}" required type="number"/>
+            <span for="loja" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label  class="control-label">Setor</label>
+            <input name="setor" class="form-control" placeholder="Setor" value="{{cadastro.setor}}" required/>
+            <span for="setor" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label  class="control-label">Mac</label>
+            <input name="mac" class="form-control" id="mac" placeholder="Mac" value="{{cadastro.mac}}" required onblur="validar_mac_dispositivos()" required maxlength="17" minlength="17" oninput="criaMascara()"/>
+            <span for="mac" class="text-danger"></span>
+        </div>
+    
+        <span class="text-danger" id="retorno"></span>
+    </div>
+
+
+    <h style="display: flex;justify-content: flex-start;margin-left:5px;color:#575757;font-size: 10px;margin-bottom: 5px;">Última edição: {{cadastro.usuario_criacao}}</h>
+
+            <div class="modal-footer">
+            
+                <button type="button" class="btn btn-danger excluir" id="{{cadastro.id}}" data-dismiss="modal" style="border-radius: 10px;">
+        
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                  </svg> Excluir
+                </button>
+                  
+                    <button type="button" class="btn btn-primary cancelar" onclick="closeModal('/funcionario/')" data-dismiss="modal" style="border-radius: 10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                          </svg> Cancelar
+                          </button>
+                    <button type="submit" class="btn btn-success salvar" style="border-radius: 10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                      </svg> Salvar
+                    </button>
+                </div>
+
+    </form>
+
+    <script src="{% static 'js/site.js' %}"></script>
+    <script src="{% static 'js/requisicoes.js' %}"></script>

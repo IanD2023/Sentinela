@@ -1,0 +1,51 @@
+{% extends "home/index.html" %}
+
+
+{% block content %}
+<div class="shadow container mt-4 table-responsive">
+
+    <table class="table rounded">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Login</th>
+            <th scope="col">Nome</th>  
+            <th scope="col">Perfil</th>           
+            <th scope="col">Data Criação</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr class="trTabela" onclick="editar('{{usuario.id}}','editar/')" >
+                <td>{{ usuario.username}}</td>
+                <td>{{ usuario.first_name}}</td>
+
+                {% if usuario.is_superuser == 1%}
+               <td>Supervisor</td>
+                {% else %}
+                <td>Usuário</td>
+                {% endif %}
+                  <!-- {% for perfil in perfis %}
+                {% if perfil.codigo == mac_address.perfil %}
+                <td>{{ perfil.nome }}</td>
+                {% endif %}
+                {% endfor %}-->
+                <td>{{ usuario.date_joined}}</td>
+
+               <!-- <td><button type="submit" style="border: none;background-color: transparent;">
+                    <i class="material-icons" style="color:red" title="remover">remove_circle</i>
+                    </button> </td> -->
+                 </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<input type="hidden" id="menu" value="usuarios"></input>
+
+<div class="botaoCriarChamado">
+    <a href="#" id="criar_funcionario" onclick="abrirModal('criar/')" class="botaoCriarChamado">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+    </svg>
+    </a>
+    </div>
+{% endblock %}

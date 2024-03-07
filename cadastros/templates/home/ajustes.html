@@ -1,0 +1,51 @@
+{% extends "home/index.html" %}
+
+
+{% block content %}
+<div class="container mt-5">
+
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Perfil</th>
+                <th>Nome</th>
+                <th>Matrícula</th>
+                <th>Data Criação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mac_address in listamacs %}
+            <tr class="trTabela" mac_address-id="{{mac_address.id}}" >
+                {% for perfil in perfis %}
+                {% if perfil.codigo == mac_address.perfil %}
+                <td>{{ perfil.nome }}</td>
+                {% endif %}
+                {% endfor %}
+                <td>{{ mac_address.nome }}</td>
+                {% if mac_address.perfil == 1 %}
+                <td>{{ mac_address.matricula}}</td>
+                {% else %}
+                <td></td>
+                {% endif%}
+                
+                
+                <td>{{ mac_address.data_criacao}}</td>
+
+               <!-- <td><button type="submit" style="border: none;background-color: transparent;">
+                    <i class="material-icons" style="color:red" title="remover">remove_circle</i>
+                    </button> </td> -->
+                 </tr>ajustes
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<input type="hidden" id="menu" value="ajustes"></input>
+
+<div class="botaoCriarChamado">
+    <a href="#" id="criar">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+    </svg>
+    </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "home/index.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+
+                <th>Vlan</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for device in lista_dispositivos %}
+            <tr class="trTabela trTabelaDevices" device-id="{{device.id}}" >
+                <td>{{ device.nome }}</td>
+                <td>{{ device.vlan }}</td>
+                 </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<input type="hidden" id="menu" value="devices"></input>
+<div class="botaoCriarChamado">
+    <a href="#" id="criar_dispositivo">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+    </svg>
+</a>
+    </div>
+{% endblock %}
